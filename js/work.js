@@ -11,8 +11,12 @@ let numbers = (document.getElementById('numbers').value)
 let r = 1 + 3.322 * Math.log10(numbers.length);
 
 //extreemes
-let minVal = Math.min(numbers);
-let maxVal = Math.max(numbers);
+let minVal = numbers.reduce(function (a, b) {
+    return Math.min(a, b);
+});
+let maxVal = numbers.reduce(function (a, b) {
+    return Math.max(a, b);
+});
 
 //length of intervals
 let len = (maxVal - minVal) / r;
@@ -31,7 +35,7 @@ for (let i = minVal; i < len * r; i += len) {
                 ammountInInterval += 1;
         }
     })
-    intervalToFrequency.set([i, i + len], ammountInInterval);
+    intervalToFrequency.set((i + i + len)/2, ammountInInterval);
 }
 
 
