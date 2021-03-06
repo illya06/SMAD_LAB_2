@@ -1,0 +1,24 @@
+h5 
+{
+    margin-bottom: 2em;;
+}
+
+.outer
+{
+    padding-top: 10em;
+    padding-left: 20em;
+    padding-right: 20em;
+}
+
+#charts canvas{
+    margin-top: 10em;
+}
+
+@media only screen and (max-width: 1400px){
+    .outer
+{
+    padding-top: 10em;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+}
