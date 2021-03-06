@@ -93,8 +93,8 @@ function calcAsymmetry() {
 
 function calcCentralMomentOfK(k, print = true) {
     let centralMomentOfK = 0;
-    numsFrequency.forEach((apearence, number) => {
-        centralMomentOfK += (Math.pow(number - midStat, k) * apearence) / numbers.length;
+    intervalToFrequency.forEach((frequency, interv) => {
+        centralMomentOfK += (Math.pow(((interv[0] - interv[1]) / 2) - midStat, k) * frequency) / numbers.length;
     });
 
     if (print) {
@@ -106,8 +106,8 @@ function calcCentralMomentOfK(k, print = true) {
 //pass a level you whant from a function
 function calcInitialMomentOfK(k, print = true) {
     let initialMomentOfK = 0;
-    numsFrequency.forEach((apearence, number) => {
-        initialMomentOfK += (Math.pow(number, k) * apearence) / numbers.length;
+    intervalToFrequency.forEach((frequency, interv) => {
+        initialMomentOfK += (Math.pow(((interv[0] - interv[1]) / 2), k) * frequency) / numbers.length;
     });
 
     if (print) {
@@ -145,7 +145,7 @@ function calcMidStatistical() {
 }
 
 function calcDispersion() {
-    numsFrequency.forEach((frequency, interv) => {
+    intervalToFrequency.forEach((frequency, interv) => {
         dispersion += (Math.pow(((interv[0] - interv[1]) / 2) - midStat, 2) * frequency) / numbers.length;
     });
     document.getElementById('dispersion').innerHTML = ` <kbd>${dispersion}</kbd>`;
@@ -154,7 +154,7 @@ function calcDispersion() {
 function calcTrend() {
     let max = 0;
     let trend = 0;
-    numsFrequency.forEach((apearence, number) => {
+    intervalToFrequency.forEach((apearence, number) => {
         if (apearence > max) {
             max = apearence;
             trend = number;
@@ -164,13 +164,8 @@ function calcTrend() {
 }
 
 function calcMedian() {
-    if (uniqueNums.length % 2 == 0) {
-        document.getElementById('median').innerHTML =
-            ` <kbd>${(uniqueNums[uniqueNums.length / 2 - 1] + uniqueNums[uniqueNums.length / 2]) / 2}</kbd>`;
-    } else {
-        document.getElementById('median').innerHTML =
-            ` <kbd>${uniqueNums[Math.round(uniqueNums.length / 2)]}</kbd>`;
-    }
+    document.getElementById('median').innerHTML =
+        ` <kbd> DUNNO </kbd>`;
 }
 
 function calcSpan() {
