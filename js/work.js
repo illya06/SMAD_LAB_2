@@ -23,11 +23,15 @@ let intervalToFrequency = new Map();
 for (let i = minVal; i < len * r; i += len) {
     let ammountInInterval = 0;
     numbers.forEach(num => {
-        if(num >= i && num < i + len){
-            ammountInInterval += 1;
+        if (i != len * r - minVal) {
+            if (num >= i && num < i + len)
+                ammountInInterval += 1;
+        } else {
+            if (num >= i && num <= i + len)
+                ammountInInterval += 1;
         }
     })
-    intervalToFrequency.set((i + i + len)/2, ammountInInterval);
+    intervalToFrequency.set([i, i + len], ammountInInterval);
 }
 
 
@@ -134,15 +138,15 @@ function calcStandardDeviation() {
 }
 
 function calcMidStatistical() {
-    numsFrequency.forEach((apearence, number) => {
-        midStat += (number * apearence) / numbers.length;
+    intervalToFrequency.forEach((frequency, interv) => {
+        midStat += (((interv[0] - interv[1]) / 2) * frequency) / numbers.length;
     });
     document.getElementById('midStatistical').innerHTML = ` <kbd>${midStat}</kbd>`;
 }
 
 function calcDispersion() {
-    numsFrequency.forEach((apearence, number) => {
-        dispersion += (Math.pow(number - midStat, 2) * apearence) / numbers.length;
+    numsFrequency.forEach((frequency, interv) => {
+        dispersion += (Math.pow(((interv[0] - interv[1]) / 2) - midStat, 2) * frequency) / numbers.length;
     });
     document.getElementById('dispersion').innerHTML = ` <kbd>${dispersion}</kbd>`;
 }
@@ -170,13 +174,7 @@ function calcMedian() {
 }
 
 function calcSpan() {
-    let max = numbers.reduce(function (a, b) {
-        return Math.max(a, b);
-    });
-    let min = numbers.reduce(function (a, b) {
-        return Math.min(a, b);
-    });
-    document.getElementById('span').innerHTML = ` <kbd>${min} - ${max}</kbd>`;
+    document.getElementById('span').innerHTML = ` <kbd>${minVal} - ${maxVal}</kbd>`;
 }
 
 
