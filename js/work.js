@@ -1,27 +1,35 @@
 
 
 
-//numbers = 0.03 0.24 0.33 0.33 0.38 0.63 0.79 0.55 0.34 0.14
+//numbers =  0.14 0.28 0.31 0.57 0.65 0.78 0.42 0.47 0.60 0.91 0.65 0.79 0.57 0.34 0.25 0.00 0.03 0.28 0.33 0.33 0.14 0.25 0.31 0.36 0.65 0.65 0.70 0.42 0.47 0.60
 let numbers = (document.getElementById('numbers').value)
     .split(" ")
     .map(Number)
     .filter(Boolean);
 
-//Unique numbers from output
-let uniqueNums = Array.from([...new Set(numbers)]);
-uniqueNums.sort(function (a, b) { return a - b; })
+//Sterjeet`s number
+let r = 1 + 3.322 * Math.log10(numbers.length);
 
-//Number <-> frequency relation map
-let numsFrequency = new Map();
-uniqueNums.map(
-    item => numsFrequency
-        .set(item, numbers.filter(x => x == item).length)
-);
+//extreemes
+let minVal = Math.min(numbers);
+let maxVal = Math.max(numbers);
 
-let uniqueFrequencies = [];
-numsFrequency.forEach((apearence, number) => {
-    uniqueFrequencies.push(apearence);
-});
+//length of intervals
+let len = (maxVal - minVal) / r;
+
+//middle of interval <-> frequency - map
+let intervalToFrequency = new Map();
+
+for (let i = minVal; i < len * r; i += len) {
+    let ammountInInterval = 0;
+    numbers.forEach(num => {
+        if(num >= i && num < i + len){
+            ammountInInterval += 1;
+        }
+    })
+    intervalToFrequency.set((i + i + len)/2, ammountInInterval);
+}
+
 
 let midStat = 0;
 let dispersion = 0;
