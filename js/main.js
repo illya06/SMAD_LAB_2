@@ -38,4 +38,8 @@ function main() {
 
     //excess
     calcExcess();
+
+
+    //build graphs
+    buildGraphs();
 }
