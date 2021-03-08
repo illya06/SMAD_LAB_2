@@ -2,88 +2,52 @@
 
 
 //numbers =  0.14 0.28 0.31 0.57 0.65 0.78 0.42 0.47 0.60 0.91 0.65 0.79 0.57 0.34 0.25 0.00 0.03 0.28 0.33 0.33 0.14 0.25 0.31 0.36 0.65 0.65 0.70 0.42 0.47 0.60
-let numbers = (document.getElementById('numbers').value)
+var numbers = (document.getElementById('numbers').value)
     .split(" ")
     .map(Number)
     .filter(Boolean);
 
 //Sterjeet`s number
-let r = 1 + 3.322 * Math.log10(numbers.length);
+var r = 1 + 3.322 * Math.log10(numbers.length);
 
 //extreemes
-let minVal = numbers.reduce(function (a, b) {
+var minVal = numbers.reduce(function (a, b) {
     return Math.min(a, b);
 });
-let maxVal = numbers.reduce(function (a, b) {
+var maxVal = numbers.reduce(function (a, b) {
     return Math.max(a, b);
 });
 
 //length of intervals
-let len = (maxVal - minVal) / r;
+var len = (maxVal - minVal) / r;
 
 //middle of interval <-> frequency - map
-let intervalToFrequency = new Map();
+var intervalToFrequency = new Map();
 
-for (let i = minVal; i < len * r; i += len) {
-    let ammountInInterval = 0;
+
+for (var i = minVal; i < len * r; i += len) {
+    var ammountInInterval = 0;
     numbers.forEach(num => {
         if (i != len * r - minVal) {
-            if (num >= i && num < i + len)
+            if (num >= i && num < i + len) {
+                //alert(`${num} belongs to : ${i.toFixed(4)} - ${(i + len).toFixed(4)}`);
                 ammountInInterval += 1;
+
+            }
         } else {
-            if (num >= i && num <= i + len)
+            if (num >= i && num <= i + len){
                 ammountInInterval += 1;
+                //alert(`${num} belongs to : ${i.toFixed(4)} - ${(i + len).toFixed(4)}`);
+            }
         }
     })
-    intervalToFrequency.set((i + i + len)/2, ammountInInterval);
+    intervalToFrequency.set([i, i + len], ammountInInterval);
 }
 
 
-let midStat = 0;
-let dispersion = 0;
-let stdDeviation = 0;
-
-function main() {
-
-    //trend
-    calcTrend();
-
-    //median
-    calcMedian();
-
-    //span
-    calcSpan();
-
-    // mid Statistical
-    calcMidStatistical();
-
-    //dispersion
-    calcDispersion();
-
-    //standardDeviation
-    calcStandardDeviation();
-
-    //correctedStandardDeviation
-    calcCorrectedDispersion();
-
-    //correctedStandardDeviation
-    calcCorrectedStandardDeviation();
-
-    //variation
-    calcVariation();
-
-    //calcInitialMoment
-    calcInitialMomentOfK(3);
-
-    //centralMoment
-    calcCentralMomentOfK(3);
-
-    //asymmetry
-    calcAsymmetry();
-
-    //excess
-    calcExcess();
-}
+var midStat = 0;
+var dispersion = 0;
+var stdDeviation = 0;
 
 function calcExcess() {
     document.getElementById('excess').innerHTML =
@@ -96,7 +60,7 @@ function calcAsymmetry() {
 }
 
 function calcCentralMomentOfK(k, print = true) {
-    let centralMomentOfK = 0;
+    var centralMomentOfK = 0;
     intervalToFrequency.forEach((frequency, interv) => {
         centralMomentOfK += (Math.pow(((interv[0] - interv[1]) / 2) - midStat, k) * frequency) / numbers.length;
     });
@@ -109,7 +73,7 @@ function calcCentralMomentOfK(k, print = true) {
 
 //pass a level you whant from a function
 function calcInitialMomentOfK(k, print = true) {
-    let initialMomentOfK = 0;
+    var initialMomentOfK = 0;
     intervalToFrequency.forEach((frequency, interv) => {
         initialMomentOfK += (Math.pow(((interv[0] - interv[1]) / 2), k) * frequency) / numbers.length;
     });
@@ -156,8 +120,8 @@ function calcDispersion() {
 }
 
 function calcTrend() {
-    let max = 0;
-    let trend = 0;
+    var max = 0;
+    var trend = 0;
     intervalToFrequency.forEach((apearence, number) => {
         if (apearence > max) {
             max = apearence;
